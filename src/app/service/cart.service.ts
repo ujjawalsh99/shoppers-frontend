@@ -24,7 +24,7 @@ export class CartService {
   /// <response code="255">No Result Found;</response>
   /// </summary>
   getCartData(userId: string): Observable<any> {
-    return this.http.post<any>(`http://localhost:3000/user/getInCart`, {
+    return this.http.post<any>(`https://shoppers-backend.onrender.com/user/getInCart`, {
       userId,
     });
   }
@@ -37,6 +37,6 @@ export class CartService {
   /// <response code="255">No Order palced;</response>
   /// </summary>
   order(orderObj: Object): Observable<any> {
-    return this.http.post<any>(`http://localhost:3000/user/order`, orderObj);
+    return this.http.post<any>(`https://shoppers-backend.onrender.com/user/order`, orderObj);
   }
 }

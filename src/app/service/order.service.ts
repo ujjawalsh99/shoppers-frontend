@@ -24,7 +24,7 @@ export class OrderService {
   /// <response code="255">Reason - No Result Found;</response>
   /// </summary>
   getOrder(userId: string): Observable<any> {
-    return this.http.post<any>(`http://localhost:3000/user/getOrders`, {
+    return this.http.post<any>(`https://shoppers-backend.onrender.com/user/getOrders`, {
       userId,
     });
   }

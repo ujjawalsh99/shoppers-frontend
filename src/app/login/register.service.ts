@@ -17,7 +17,7 @@ export class RegisterService {
 
   login(userCredential: Credentials): Observable<any> {
     return this.http.post(
-      'http://localhost:3000/user/login',
+      'https://shoppers-backend.onrender.com/user/login',
       userCredential
     ) as Observable<any>;
   }

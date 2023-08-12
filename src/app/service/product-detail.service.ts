@@ -24,7 +24,7 @@ export class ProductDetailService {
   /// <response code="255">Reason - No Result Found;</response>
   /// </summary>
   getProductDetailData(prodId: string): Observable<any> {
-    return this.http.get<any>(`http://localhost:3000/product/id/${prodId}`);
+    return this.http.get<any>(`https://shoppers-backend.onrender.com/product/id/${prodId}`);
   }
 
   /// <summary>
@@ -36,7 +36,7 @@ export class ProductDetailService {
   /// </summary>
   postProductDetailData(prodObj: object): Observable<any> {
     return this.http.post<any>(
-      'http://localhost:3000/user/addToCart/',
+      'https://shoppers-backend.onrender.com/user/addToCart/',
       prodObj
     );
   }

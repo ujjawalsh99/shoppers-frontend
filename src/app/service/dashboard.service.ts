@@ -25,7 +25,7 @@ export class DashboardService {
   /// </summary>
   getProductData(category: string): Observable<any> {
     return this.http.get<any>(
-      `http://localhost:3000/product/category/${category}`
+      `https://shoppers-backend.onrender.com/product/category/${category}`
     );
   }
 }
