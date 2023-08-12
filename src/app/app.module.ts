@@ -8,6 +8,7 @@ import { GuardService } from './guard.service';
 import { RegisterService } from './login/register.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 // ---------------angular-material--------------------
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -63,7 +64,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatMenuModule,
     MatSlideToggleModule,
   ],
-  providers: [UriService, RegisterService, GuardService],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}, UriService, RegisterService, GuardService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
