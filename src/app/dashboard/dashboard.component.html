@@ -1,0 +1,86 @@
+<div>
+    <mat-tab-group
+      mat-stretch-tabs
+      mat-align-tabs="center"
+      (selectedTabChange)="viewProductByCategory($event)"
+      [color]="darkTheme ? 'accent' : 'primary'"
+    >
+      <mat-tab *ngFor="let tab of categories">
+        <ng-template mat-tab-label
+          ><div [ngClass]="darkTheme ? 'text-white' : 'text-slate-900'">
+            {{ tab }}
+          </div></ng-template
+        >
+        <div *ngIf="slideShow" class="flex justify-center items-center">
+          <mat-carousel
+            proportion="40"
+            interval="2000"
+            [ngClass]="
+              darkTheme
+                ? 'w-4/5 my-4 p-4 border-2 border-neutral-800 rounded-md bg-neutral-800'
+                : 'w-4/5 my-4 p-4 border-2 border-slate-200 rounded-md bg-slate-50'
+            "
+            (click)="slideShow = false; productShow = true"
+          >
+            <mat-carousel-slide *ngFor="let image of images" [image]="image">
+            </mat-carousel-slide>
+          </mat-carousel>
+        </div>
+        <div class="flex justify-center items-center">
+          <div
+            class="grid gap-10 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 justify-between my-4 w-4/5"
+            *ngIf="productShow"
+          >
+            <mat-card
+              [ngClass]="
+                darkTheme
+                  ? 'flex flex-col justify-between mat-elevation-z4 w-52 h-96 m-2 hover:shadow-2xl hover:border-neutral-600 hover:border-2 bg-neutral-800 text-white'
+                  : 'flex flex-col justify-between mat-elevation-z4 w-52 h-96 m-2 hover:shadow-2xl hover:border-gray-200 hover:border-2'
+              "
+              *ngFor="let product of productArray"
+              routerLink="/productDetail/{{ product._id }}"
+            >
+              <div
+                class="flex flex-col items-center justify-center pt-4 rounded-lg h-3/5"
+              >
+                <img
+                  mat-card-image
+                  src="assets/img/{{ product.image }}"
+                  alt="{{ product.pName }}"
+                  class="rounded-lg"
+                />
+              </div>
+  
+              <div class="flex flex-col justify-between h-2/5">
+                <div class="font-bold m-2 grow">{{ product.pName }}</div>
+                <div
+                  class="bg-green-400 w-fit px-2 py-1 rounded-full font-bold m-2"
+                  *ngIf="product.pRating >= 4"
+                >
+                  {{ product.pRating | number : "0.1-1" }}
+                </div>
+                <div
+                  class="bg-orange-400 w-fit px-2 py-1 rounded-full font-bold m-2"
+                  *ngIf="product.pRating >= 3 && product.pRating < 4"
+                >
+                  {{ product.pRating | number : "0.1-1" }}
+                </div>
+                <div
+                  class="bg-red-400 w-fit px-2 py-1 rounded-full font-bold m-2"
+                  *ngIf="product.pRating < 3"
+                >
+                  {{ product.pRating | number : "0.1-1" }}
+                </div>
+                <div class="text-xl font-semibold m-2">
+                  {{ product.price | currency : "INR" : "symbol" : "0.2-2" }}
+                </div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  
+    <router-outlet></router-outlet>
+  </div>
+  

@@ -1,0 +1,166 @@
+<p>cart works!</p>
+<!-- cart.component.html -->
+<section class="flex justify-center items-center my-4">
+    <div class="w-4/5 flex flex-col lg:flex-row justify-between">
+      <div
+        [class]="
+          darkTheme
+            ? 'flex flex-col items-center justify-center text-neutral-200 flex-[5] my-4'
+            : 'flex flex-col items-center justify-center text-slate-900 flex-[5] my-4'
+        "
+      >
+        <div class="text-4xl font-bold uppercase my-2">
+          You have {{ productData?.length }} product(s) in your cart!
+        </div>
+        <div
+          [class]="
+            darkTheme
+              ? 'flex flex-col justify-center p-4 border-2 border-neutral-600 rounded-md my-2 w-full'
+              : 'flex flex-col justify-center p-4 border-2 border-slate-200 rounded-md my-2 w-full'
+          "
+          *ngFor="let product of productData"
+        >
+          <div class="text-2xl mb-2">{{ product.productData.pName }}</div>
+          <div
+            [class]="
+              darkTheme
+                ? 'flex flex-row items-center justify-between p-4 border-2 border-neutral-600 rounded-sm'
+                : 'flex flex-row items-center justify-between p-4 border-2 border-slate-200 rounded-sm'
+            "
+          >
+            <div class="[&>div]:p-2 mx-2">
+              <div class="font-bold">Quantity in Cart</div>
+              <div class="flex flex-row items-center justify-center [&>div]:m-1">
+                <button
+                  type="button"
+                  [class]="
+                    darkTheme
+                      ? 'border-2 border-neutral-600 rounded-md font-semibold'
+                      : 'border-2 border-slate-200 rounded-md font-semibold'
+                  "
+                  (click)="addToCart(-1, product.productData._id)"
+                >
+                  <div class="p-2" *ngIf="product.productCount > 1">-</div>
+                  <mat-icon
+                    class="text-base my-2"
+                    *ngIf="product.productCount === 1"
+                    >delete</mat-icon
+                  >
+                </button>
+                <!-- Display product count to purchase -->
+                <div class="p-3 text-lg font-bold gap-28">
+                  {{ product.productCount }}
+                </div>
+                <button
+                  type="button"
+                  [class]="
+                    darkTheme
+                      ? 'p-2 border-2 border-neutral-600 rounded-md font-semibold'
+                      : 'p-2 border-2 border-slate-200 rounded-md font-semibold'
+                  "
+                  (click)="addToCart(1, product.productData._id)"
+                  [disabled]="
+                    product.productCount > product.productData.pSeller.pQuantity
+                  "
+                >
+                  +
+                </button>
+              </div>
+            </div>
+            <div class="[&>div]:p-2 mx-2">
+              <!-- Display the total amount based on quantity selected -->
+              <div class="font-bold">Discounted Price</div>
+              <div class="font-extrabold">
+                {{
+                  product.productCount *
+                    product.productData.price *
+                    (1 - product.productData.pSeller.pDiscount)
+                    | currency : "INR" : "symbol" : "0.2-2"
+                }}
+              </div>
+            </div>
+            <!-- Display the number of products available in stock -->
+            <div class="mx-2 [&>div]:p-2 text-center">
+              <div class="font-bold">In Stock</div>
+              <div>{{ product.productData.pSeller.pQuantity }}</div>
+            </div>
+  
+            <!-- Button to delete the product from the cart -->
+            <div class="mx-2 [&>div]:p-2">
+              <button
+                type="button"
+                (click)="
+                  addToCart(-product.productCount, product.productData._id)
+                "
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div
+        [class]="
+          darkTheme
+            ? 'flex flex-col ml-4 text-neutral-200 flex-[2] my-2 p-4 border-2 border-neutral-600 rounded-md h-fit'
+            : 'flex flex-col ml-4 text-slate-900 flex-[2] my-2 p-4 border-2 border-slate-200 rounded-md h-fit'
+        "
+        *ngIf="productData?.length > 0"
+      >
+        <div class="text-2xl font-bold uppercase">Price Details</div>
+        <div class="[&>div]:my-4">
+          <div
+            [class]="
+              darkTheme
+                ? 'p-4 border-2 border-neutral-600 rounded-sm'
+                : 'p-4 border-2 border-slate-200 rounded-sm'
+            "
+          >
+            <div class="text-lg">Cart Total (MRP):</div>
+            <div class="text-2xl font-semibold">
+              {{ total | currency : "INR" : "symbol" : "0.2-2" }}
+            </div>
+          </div>
+          <div
+            [class]="
+              darkTheme
+                ? 'p-4 border-2 border-neutral-600 rounded-sm'
+                : 'p-4 border-2 border-slate-200 rounded-sm'
+            "
+          >
+            <div class="text-lg">Total Tax (17% by default):</div>
+            <div class="text-2xl font-semibold">
+              {{ total * 0.17 | currency : "INR" : "symbol" : "0.2-2" }}
+            </div>
+          </div>
+          <div
+            [class]="
+              darkTheme
+                ? 'p-4 border-2 border-neutral-600 rounded-sm'
+                : 'p-4 border-2 border-slate-200 rounded-sm'
+            "
+          >
+            <div class="text-lg font-bold">Total Payable:</div>
+            <div class="text-3xl text-green-500 text-bold">
+              {{ total * 1.17 | currency : "INR" : "symbol" : "0.2-2" }}
+            </div>
+          </div>
+        </div>
+        <!-- Button to go to the Checkout for order confirmation -->
+        <div>
+          <button
+            [class]="
+              darkTheme
+                ? 'text-center w-full bg-neutral-200 hover:bg-neutral-300 text-black  font-bold py-2 px-4 rounded-md'
+                : 'text-center w-full bg-slate-700 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded-md'
+            "
+            (click)="order()"
+          >
+            Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  

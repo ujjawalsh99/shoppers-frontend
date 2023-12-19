@@ -1,0 +1,16 @@
+.example-fill-remaining-space {
+  
+    flex: 1 1 auto;
+  }
+  .mat-tab{
+   
+  
+   height: '100%';
+   position : 'absolute';
+   justify-content : 'space-between'; 
+ }
+
+
+mat-icon{
+  cursor:pointer;
+}

@@ -1,0 +1,57 @@
+<div [ngClass]="darkTheme ? 'bg-neutral-900 h-screen w-screen' : 'bg-slate-50'">
+  <div [ngClass]="darkTheme ? 'bg-neutral-900 h-max w-screen' : 'bg-slate-50'">
+    <mat-toolbar
+      [ngClass]="
+        darkTheme
+          ? 'bg-neutral-800 text-white flex flex-row justify-center'
+          : 'bg-slate-900 text-white flex flex-row justify-center'
+      "
+    >
+      <div class="flex flex-row justify-between w-4/5">
+        <button [routerLink]="['/dashboard']" class="text-3xl font-extrabold">
+          Shoppers
+        </button>
+        <div class="flex flex-row justify-between items-center [&>div]:mx-4">
+          <div>
+            <mat-form-field>
+              <mat-icon (click)="searchProducts(searchKey.value)" class="mx-2"
+                >search</mat-icon
+              >
+              <input
+                (keypress)="searchProductTrigger($event, searchKey.value)"
+                class="searchIcon"
+                [(ngModel)]="searchValue"
+                #searchKey
+                type="text"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <mat-slide-toggle
+            [checked]="darkTheme"
+            (toggleChange)="changeTheme()"
+          ></mat-slide-toggle>
+          <div *ngIf="userName">
+            <button mat-button [matMenuTriggerFor]="menu">
+              {{ userName }}
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item routerLink="/cart">Cart</button>
+              <button mat-menu-item routerLink="/order">Order</button>
+              <button mat-menu-item (click)="logout()">Log Out</button>
+            </mat-menu>
+          </div>
+          <div *ngIf="!userName" class="flex flex-row justify-between">
+            <div>
+              <button routerLink="/login" class="p-2">Login</button>
+            </div>
+            <div>
+              <button routerLink="/register" class="p-2">Register</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </div>
+</div>

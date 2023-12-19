@@ -1,0 +1,62 @@
+<!-- order.component.html -->
+<section class="flex items-center justify-center">
+    <div
+      [class]="
+        darkTheme
+          ? 'flex flex-col items-center justify-center w-4/5 p-4 border-2 border-neutral-600 rounded-sm my-9 shadow-xl text-white'
+          : 'flex flex-col items-center justify-center w-4/5 p-4 border-2 border-slate-200 rounded-sm my-9 shadow-xl'
+      "
+      *ngIf="!orderEmpty"
+    >
+      <!-- Column Name - Product - Quantity - Order Date - Total Cost -->
+      <div class="flex justify-between items-center w-full my-2 p-4">
+        <div class="font-bold text-center flex-1">Product</div>
+        <div class="font-bold text-center flex-1">Quantity</div>
+        <div class="font-bold text-center flex-1">Order Date</div>
+        <div class="font-bold text-center flex-1">Total Cost</div>
+      </div>
+      <!-- Iterate over the orderData to render the order of the user -->
+      <div
+        *ngFor="let order of orderData"
+        [class]="
+          darkTheme
+            ? 'flex justify-between items-center p-4 border-2 border-neutral-600 rounded-md w-full my-2'
+            : 'flex justify-between items-center p-4 border-2 border-slate-200 rounded-md w-full my-2'
+        "
+      >
+        <!-- Display Product Name -->
+        <div class="text-center flex-1">
+          {{ order.productName }}
+        </div>
+        <!-- Display number of counts of product purchased -->
+        <div class="text-center flex-1">
+          {{ order.productCount }}
+        </div>
+        <!-- Display Order Date -->
+        <div class="text-center flex-1">
+          {{ order.orderDate | date : "medium" }}
+        </div>
+        <!-- Display total amount for a product -->
+        <div class="text-center flex-1">
+          {{ order.totalcost | currency : "INR" : "symbol" : "0.2-2" }}
+        </div>
+      </div>
+    </div>
+    <!-- Display Message if there is not order placed -->
+    <div
+      [class]="
+        darkTheme
+          ? 'flex flex-row items-center justify-center w-4/5 text-neutral-400 h-[32rem]'
+          : 'flex flex-row items-center justify-center w-4/5 text-slate-900 h-[32rem]'
+      "
+      *ngIf="orderEmpty"
+    >
+      <div class="text-center text-4xl p-6">
+        Order Something First You Absolute Peasent
+      </div>
+      <div>
+        <mat-icon class="text-9xl p-6">remove_shopping_cart</mat-icon>
+      </div>
+    </div>
+  </section>
+  

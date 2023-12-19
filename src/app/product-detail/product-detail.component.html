@@ -1,0 +1,126 @@
+<!-- product-detail.component.html -->
+<div class="w-screen flex justify-center">
+    <div class="flex flex-col md:flex-row justify-center items-center w-4/5 mt-4">
+      <div class="flex flex-col justify-between flex-[2] m-5">
+        <div class="w-96 h-96">
+          <!-- modify the img tag to display the image using the productImage property 
+               of all the product and set the alternate text as the productName 
+          -->
+          <img
+            class="object-contain w-full h-full rounded-lg"
+            src="assets/img/{{ productDataObj?.productImage }}"
+            alt="{{ productDataObj.productName }}"
+          />
+        </div>
+  
+        <div [ngClass]="darkTheme ? 'text-white' : 'text-slate-900'">
+          <div class="mt-4 leading-3">
+            <div class="flex flex-row items-baseline">
+              <!-- Display Discounted product price -->
+              <div class="text-3xl font-bold">
+                {{
+                  productDataObj.productPrice *
+                    (1 - productDataObj.productDiscount)
+                    | currency : "INR" : "symbol" : "0.2-2"
+                }}
+              </div>
+              &nbsp; &nbsp;
+              <!-- Display actual product price -->
+              <div class="text-lg text-slate-500 font-semibold line-through">
+                {{
+                  productDataObj.productPrice
+                    | currency : "INR" : "symbol" : "0.2-2"
+                }}
+              </div>
+              &nbsp; &nbsp;
+              <!-- Display total discount on the product -->
+              <div class="text-lg text-green-500 font-semibold whitespace-nowrap">
+                {{ productDataObj.productDiscount * 100 }}% off
+              </div>
+            </div>
+            <!-- Display total Shipping charges -->
+            <div>
+              +
+              {{ productDataObj.productShippingCharge | currency : "INR" }}
+              Shipping Charges
+            </div>
+          </div>
+        </div>
+        <div class="mt-2">
+          <!-- Display Product Rating -->
+          <div class="rounded-md flex flex-row justify-center items-center w-max">
+            <mat-icon
+              [class]="darkTheme ? 'text-white' : 'text-slate-900'"
+              *ngFor="let number of productDataObj.productRating"
+              >star</mat-icon
+            >
+            <mat-icon
+              [class]="darkTheme ? 'text-white' : 'text-slate-900'"
+              *ngFor="let number of productDataObj.productNegativeRating"
+              >star_border</mat-icon
+            >
+          </div>
+        </div>
+      </div>
+      <div
+        [class]="
+          darkTheme
+            ? '[&>div]:p-5 p-2 border-2 border-slate-200 rounded-md h-fit flex-[5] m-5 text-white'
+            : '[&>div]:p-5 p-2 border-2 border-slate-200 rounded-md h-fit flex-[5] m-5'
+        "
+      >
+        <!-- Display Product Name -->
+        <div
+          [class]="
+            darkTheme
+              ? 'font-extrabold text-neutral-400 text-5xl uppercase'
+              : 'font-extrabold text-slate-900 text-5xl uppercase'
+          "
+        >
+          {{ productDataObj.productName }}
+        </div>
+        <div>
+          <!-- Display Product Description -->
+          <div class="font-semibold uppercase">Description</div>
+          <p>{{ productDataObj.productDescription }}</p>
+        </div>
+        <div>
+          <!-- Display Product Specification -->
+          <div class="font-semibold uppercase">Specification</div>
+          <ul>
+            <li>Color: {{ productDataObj.productSpecification }}</li>
+          </ul>
+        </div>
+        <div class="flex flex-row">
+          <!-- Display Seller Name -->
+          <div class="font-semibold uppercase">Seller</div>
+          <div class="ml-2">{{ productDataObj.sellerName }}</div>
+        </div>
+        <div class="[&>button]:mr-3 [&>button]:mb-3">
+          <!-- Button to add the product to the user cart -->
+          <button
+            [class]="
+              darkTheme
+                ? 'bg-neutral-700 hover:bg-neutral-500 text-white font-bold py-2 px-4 rounded-md'
+                : 'bg-slate-700 hover:bg-slate-900 text-white font-bold py-2 px-4 rounded-md'
+            "
+            (click)="addToCart()"
+          >
+            Add to Cart
+          </button>
+          <!-- Button to Go Back to the Dashboard Page -->
+          <button
+            [class]="
+              darkTheme
+                ? 'bg-neutral-200 hover:bg-neutral-300 text-black font-bold py-2 px-4 rounded-md'
+                : 'bg-slate-200 hover:bg-slate-300 font-bold py-2 px-4 rounded-md'
+            "
+            routerLink="/dashboard"
+          >
+            Go Back
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

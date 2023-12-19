@@ -1,0 +1,301 @@
+<!-- registration.component.html -->
+<br /><br /><br />
+<div fxFlexOffset="50%" fxFlex="50%" class="w-screen">
+  <div class="w-screen flex justify-center">
+    <div class="flex flex-col lg:flex-row justify-between items-center w-1/2">
+      <mat-card-header>
+        <div class="flex flex-col items-start justify-center">
+          <div>
+            <mat-icon
+              [class]="
+                darkTheme
+                  ? 'font-extrabold text-9xl text-neutral-400 ml-16'
+                  : 'font-extrabold text-9xl text-gray-800 ml-16'
+              "
+              >group_add</mat-icon
+            >
+          </div>
+
+          <div
+            [class]="
+              darkTheme
+                ? 'font-extrabold text-4xl text-neutral-400 whitespace-nowrap'
+                : 'font-extrabold text-4xl text-gray-800 whitespace-nowrap'
+            "
+          >
+            Create Account
+          </div>
+        </div>
+      </mat-card-header>
+      <mat-card-content class="[&>form>div]:py-2">
+        <!-- BIND THE FORM TO registrationForm instance and invoke registerUser() method on form submission -->
+        <form [formGroup]="registrationForm" (ngSubmit)="registerUser()">
+          <div>
+            <!--Input fields with appropriate labels and form controls and render the error messages for incorrect input only if the field is dirty and has invalid data-->
+            <mat-form-field [class]="darkTheme ? 'text-white' : 'text-black'">
+              <!-- FORM CONTROL ==> customerName -->
+              <input
+                matInput
+                type="text"
+                id="username"
+                formControlName="customerName"
+              />
+              <mat-placeholder [class]="darkTheme ? 'text-white' : 'text-black'"
+                >Full Name</mat-placeholder
+              >
+              <mat-hint
+                ><div [class]="darkTheme ? 'text-white' : 'text-black'">
+                  Dalai Lama
+                </div></mat-hint
+              >
+              <mat-error
+                id="customerNameError"
+                *ngIf="
+                  registrationForm.controls['customerName'].invalid &&
+                  registrationForm.controls['customerName'].touched
+                "
+              >
+                <!-- Message for required error ==> 'Field Required' -->
+                <!-- Message for pattern error ==> 'Name can have only alphabets and white space' -->
+                <span
+                  *ngIf="
+                    registrationForm.controls['customerName'].errors.required
+                  "
+                  >Field Required</span
+                >
+                <span
+                  *ngIf="
+                    registrationForm.controls['customerName'].errors.pattern
+                  "
+                  >Name can have only alphabets and white space</span
+                >
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field [class]="darkTheme ? 'text-white' : 'text-black'">
+              <!-- FORM CONTROL ==> phoneNumber -->
+              <input
+                matInput
+                type="phone"
+                id="contactNo"
+                formControlName="phoneNumber"
+              />
+              <mat-placeholder [class]="darkTheme ? 'text-white' : 'text-black'"
+                >Contact Number</mat-placeholder
+              >
+              <mat-hint
+                ><div [class]="darkTheme ? 'text-white' : 'text-black'">
+                  Enter 10 digits
+                </div></mat-hint
+              >
+              <mat-error
+                id="customerPhoneError"
+                *ngIf="
+                  registrationForm.controls['phoneNumber'].invalid &&
+                  registrationForm.controls['phoneNumber'].touched
+                "
+              >
+                <!-- Message for required error ==> 'Field Required' -->
+                <!-- Message for pattern error ==> 'Phone Number cannot be more than 10 digits' -->
+                <!-- Message for pattern error ==> 'Phone Number should not start with 0' -->
+                <span
+                  *ngIf="
+                    registrationForm.controls['phoneNumber'].errors.required
+                  "
+                  >Field Required</span
+                >
+                <span
+                  *ngIf="
+                    registrationForm.controls['phoneNumber'].errors
+                      ?.minlength ||
+                    registrationForm.controls['phoneNumber'].errors?.maxlength
+                  "
+                  >Phone Number should be 10 digits</span
+                >
+                <span
+                  *ngIf="
+                    !(
+                      registrationForm.controls['phoneNumber'].errors
+                        ?.minlength ||
+                      registrationForm.controls['phoneNumber'].errors?.maxlength
+                    ) && registrationForm.controls['phoneNumber'].errors.pattern
+                  "
+                  >Phone Number should not start with 0</span
+                >
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field [class]="darkTheme ? 'text-white' : 'text-black'">
+              <!-- FORM CONTROL ==> customerEmail -->
+              <input
+                matInput
+                type="email"
+                id="useremail"
+                formControlName="customerEmail"
+              />
+              <mat-placeholder [class]="darkTheme ? 'text-white' : 'text-black'"
+                >Email ID</mat-placeholder
+              >
+              <mat-hint
+                ><div [class]="darkTheme ? 'text-white' : 'text-black'">
+                  lamadalai@gmail.com
+                </div></mat-hint
+              >
+              <mat-error
+                id="customerEmailError"
+                *ngIf="
+                  registrationForm.controls['customerEmail'].invalid &&
+                  registrationForm.controls['customerEmail'].touched
+                "
+              >
+                <!-- Message for required error ==> 'Field Required' -->
+                <!-- Message for pattern error ==> 'Please enter valid email id' -->
+                <span
+                  *ngIf="
+                    registrationForm.controls['customerEmail'].errors.required
+                  "
+                  >Field Required</span
+                >
+                <span
+                  *ngIf="
+                    registrationForm.controls['customerEmail'].errors.pattern
+                  "
+                  >Please enter valid Email ID</span
+                >
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field [class]="darkTheme ? 'text-white' : 'text-black'">
+              <!-- FORM CONTROL ==> password -->
+              <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                type="password"
+                id="passwd"
+                formControlName="password"
+              />
+              <mat-placeholder [class]="darkTheme ? 'text-white' : 'text-black'"
+                >Password</mat-placeholder
+              >
+              <button
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide"
+              >
+                <mat-icon>{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+
+              <mat-error
+                id="customerPasswordError"
+                class="alert alert-danger"
+                *ngIf="
+                  registrationForm.controls['password'].invalid &&
+                  registrationForm.controls['password'].touched
+                "
+              >
+                <!-- Message for required error ==> 'Field Required' -->
+                <!-- Message for required error ==> 'Please enter valid password' -->
+                <!-- Message for pattern error ==> 'Password length should be between 7 - 20 characters' -->
+                <span
+                  *ngIf="registrationForm.controls['password'].errors.required"
+                  >Field Required</span
+                >
+                <span
+                  *ngIf="registrationForm.controls['password'].errors.pattern"
+                  >Please enter valid password</span
+                >
+                <span
+                  *ngIf="
+                    registrationForm.controls['password'].errors.min ||
+                    registrationForm.controls['password'].errors.max
+                  "
+                  >Password length should be between 7 - 20 characters</span
+                >
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field [class]="darkTheme ? 'text-white' : 'text-black'">
+              <!-- FORM CONTROL ==> address -->
+              <textarea
+                matInput
+                id="postaddress"
+                formControlName="address"
+              ></textarea>
+              <mat-placeholder [class]="darkTheme ? 'text-white' : 'text-black'"
+                >Address</mat-placeholder
+              >
+
+              <mat-error
+                id="customerAddressError"
+                *ngIf="
+                  registrationForm.controls['address'].invalid &&
+                  registrationForm.controls['address'].touched
+                "
+              >
+                <!-- Message for required error ==> 'Field Required' -->
+                <!-- Message for pattern error ==> 'Please enter valid address' -->
+                <!-- Message for pattern error ==> 'Address length should be more than 10 characters' -->
+                <span
+                  *ngIf="registrationForm.controls['address'].errors.required"
+                  >Field Required</span
+                >
+                <span
+                  *ngIf="registrationForm.controls['address'].errors.pattern"
+                  >Please enter valid address</span
+                >
+                <span
+                  *ngIf="registrationForm.controls['address'].errors.minlength"
+                  >Address length should be more than 10 characters</span
+                >
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <!-- button should be disabled till registrationForm becomes valid -->
+            <button
+              mat-flat-button
+              [disabled]="registrationForm.invalid"
+              type="submit"
+              [class]="
+                darkTheme
+                  ? 'bg-neutral-200 hover:bg-neutral-300 text-black  example-full-width'
+                  : 'bg-slate-700 hover:bg-slate-900 text-white  example-full-width'
+              "
+            >
+              Register
+            </button>
+          </div>
+
+          <!-- render the success and error messages based on form submission response -->
+          <div
+            *ngIf="errorMessage"
+            class="text-center text-red-400 text-lg font-semibold"
+            id="errorMessage"
+          >
+            <!-- ERROR MESSAGE COMES HERE -->
+            {{ errorMessage }}
+          </div>
+          <div
+            *ngIf="successMessage"
+            class="text-center text-green-400 text-lg font-semibold"
+            id="successMessage"
+          >
+            <!-- SUCCESS MESSAGE COMES HERE -->
+            {{ successMessage }}
+            <br />
+            <!-- render the message to display the countdown to redirect to login page -->
+            <div id="countdown"></div>
+          </div>
+        </form>
+      </mat-card-content>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,129 @@
+<!-- login.component.html -->
+<br /><br /><br />
+<div fxFlexOffset="50%" fxFlex="50%" class="w-screen">
+  <div class="w-screen lg:mt-32 flex justify-center">
+    <div
+      class="flex justify-between items-center w-1/2 lg:flex-row flex-col my-8"
+    >
+      <mat-card-header>
+        <div class="flex flex-col items-start justify-center">
+          <div>
+            <mat-icon
+              [class]="
+                darkTheme
+                  ? 'font-extrabold text-9xl text-neutral-400 ml-12'
+                  : 'font-extrabold text-9xl text-gray-800 ml-12'
+              "
+              >lock_outlined</mat-icon
+            >
+          </div>
+
+          <div
+            [class]="
+              darkTheme
+                ? 'font-extrabold text-4xl text-neutral-400 text-center whitespace-nowrap'
+                : 'font-extrabold text-4xl text-gray-800 text-center whitespace-nowrap'
+            "
+          >
+            Please Login<br />
+            to Continue
+          </div>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- Login FORM and invoke login() method on form submission -->
+        <form (ngSubmit)="login()">
+          <!-- Input fields with appropriate labels and form controls and 
+               render the error messages for incorrect input only if the field is dirty and has invalid data
+          -->
+          <div>
+            <mat-form-field [class]="darkTheme ? 'text-white' : 'text-black'">
+              <input matInput [formControl]="email" />
+              <mat-placeholder [class]="darkTheme ? 'text-white' : 'text-black'"
+                >Email Id</mat-placeholder
+              >
+              <mat-hint
+                ><div [class]="darkTheme ? 'text-white' : 'text-black'">
+                  Hint: abc@infy.com
+                </div></mat-hint
+              >
+              <mat-error *ngIf="email.invalid">{{
+                getErrorMessage("email")
+              }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field [class]="darkTheme ? 'text-white' : 'text-black'">
+              <input
+                matInput
+                [type]="hide ? 'password' : 'text'"
+                [formControl]="password"
+              />
+              <mat-placeholder [class]="darkTheme ? 'text-white' : 'text-black'"
+                >Password</mat-placeholder
+              >
+              <button
+                type="button"
+                mat-icon-button
+                matSuffix
+                (click)="hide = !hide"
+                [class]="darkTheme ? 'text-white' : 'text-black'"
+              >
+                <mat-icon>{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </button>
+              <mat-hint
+                ><div [class]="darkTheme ? 'text-white' : 'text-black'">
+                  Hint: Abc@123
+                </div></mat-hint
+              >
+              <mat-error *ngIf="password.invalid">{{
+                getErrorMessage("password")
+              }}</mat-error>
+            </mat-form-field>
+          </div>
+          <!-- button should be disabled till form becomes valid -->
+          <div>
+            <button
+              mat-flat-button
+              [class]="
+                darkTheme
+                  ? 'bg-neutral-200 hover:bg-neutral-300 text-black  example-full-width'
+                  : 'bg-slate-700 hover:bg-slate-900 text-white  example-full-width'
+              "
+              [disabled]="email.invalid || password.invalid"
+              type="submit"
+            >
+              Login
+            </button>
+          </div>
+
+          <!-- render the success and error messages based on form submission response -->
+          <p class="text-success">{{ successMessage }}</p>
+          <div class="text-center text-primary">
+            <a routerLink="/register" class="text-red-700"
+              >New to Shoppers? Create an account</a
+            >
+          </div>
+          <div
+            *ngIf="errorMessage"
+            class="text-center text-red-400 text-lg font-semibold"
+            id="errorMessage"
+          >
+            <!-- ERROR MESSAGE COMES HERE -->
+            {{ errorMessage }}
+          </div>
+          <div
+            *ngIf="successMessage"
+            class="text-center text-green-400 text-lg font-semibold"
+            id="successMessage"
+          >
+            <!-- SUCCESS MESSAGE COMES HERE -->
+            {{ successMessage }}
+          </div>
+        </form>
+      </mat-card-content>
+    </div>
+  </div>
+</div>
