@@ -25,7 +25,7 @@ export class SearchProductService {
   /// </summary>
   getSearchData(productName: string): Observable<any> {
     return this.http.get<any>(
-      `https://shoppers-backend.onrender.com/product/search/${productName}`
+      `https://shoppers-backend-production.up.railway.app/product/search/${productName}`
     );
   }
 }

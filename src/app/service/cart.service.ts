@@ -24,9 +24,12 @@ export class CartService {
   /// <response code="255">No Result Found;</response>
   /// </summary>
   getCartData(userId: string): Observable<any> {
-    return this.http.post<any>(`https://shoppers-backend.onrender.com/user/getInCart`, {
-      userId,
-    });
+    return this.http.post<any>(
+      `https://shoppers-backend-production.up.railway.app/user/getInCart`,
+      {
+        userId,
+      }
+    );
   }
 
   /// <summary>
@@ -37,6 +40,9 @@ export class CartService {
   /// <response code="255">No Order palced;</response>
   /// </summary>
   order(orderObj: Object): Observable<any> {
-    return this.http.post<any>(`https://shoppers-backend.onrender.com/user/order`, orderObj);
+    return this.http.post<any>(
+      `https://shoppers-backend-production.up.railway.app/user/order`,
+      orderObj
+    );
   }
 }

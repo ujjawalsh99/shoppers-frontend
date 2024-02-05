@@ -24,6 +24,9 @@ export class RegistrationService {
   /// <response code="255">User already exists;</response>
   /// </summary>
   registerUserService(regUser: any): Observable<any> {
-    return this.http.post('https://shoppers-backend.onrender.com/user/register', regUser);
+    return this.http.post(
+      'https://shoppers-backend-production.up.railway.app/user/register',
+      regUser
+    );
   }
 }
